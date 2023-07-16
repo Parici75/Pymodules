@@ -1,4 +1,5 @@
 """File utilities."""
+from __future__ import annotations
 
 import csv
 import logging
@@ -32,9 +33,7 @@ def load_obj(filename: str) -> Any:
 def process_filename(file_title_bits: Sequence) -> str:
     """Joins string bits, replacing white space with underscores and capitalizing first letter."""
     if not isinstance(file_title_bits, str):
-        filename = "_".join(
-            [i.replace(" ", "_") for i in file_title_bits if i]
-        )
+        filename = "_".join([i.replace(" ", "_") for i in file_title_bits if i])
     else:
         filename = file_title_bits.replace(" ", "_")
 
@@ -64,9 +63,7 @@ def mkdir(newdir: str) -> str:
     return newdir_path
 
 
-def write_dict_to_csv(
-    dictionary_list: List[Dict[str, Any]], output_file: str
-) -> None:
+def write_dict_to_csv(dictionary_list: List[Dict[str, Any]], output_file: str) -> None:
     """Exports a list of dictionaries to a csv."""
 
     fieldnames = [record.keys() for record in dictionary_list]
@@ -74,12 +71,8 @@ def write_dict_to_csv(
         raise ValueError(f"Dictionary keys are not all identical")
 
     try:
-        with open(
-            os.path.normpath(output_file), "w", encoding="utf-8"
-        ) as csv_file:
-            writer = csv.DictWriter(
-                csv_file, fieldnames=list(dictionary_list[0].keys())
-            )
+        with open(os.path.normpath(output_file), "w", encoding="utf-8") as csv_file:
+            writer = csv.DictWriter(csv_file, fieldnames=list(dictionary_list[0].keys()))
             writer.writeheader()
             for data in dictionary_list:
                 writer.writerow(data)
@@ -90,7 +83,5 @@ def write_dict_to_csv(
 def build_timestamped_dir(root_folder: str | None = None) -> str:
     if root_folder is None:
         root_folder = os.getcwd()
-    timestamped_dir = os.path.join(
-        root_folder, datetime.now().strftime("%Y%m%d-%H%M%S")
-    )
+    timestamped_dir = os.path.join(root_folder, datetime.now().strftime("%Y%m%d-%H%M%S"))
     return timestamped_dir

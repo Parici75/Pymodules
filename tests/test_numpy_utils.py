@@ -54,9 +54,7 @@ def test_window_slide():
         [13],
     ]
 
-    assert (
-        len(window_slide(np.arange(5, 15), stepsize=1, width=11).tolist()) == 0
-    )
+    assert len(window_slide(np.arange(5, 15), stepsize=1, width=11).tolist()) == 0
 
 
 def test_consecutive_steps():
@@ -65,9 +63,7 @@ def test_consecutive_steps():
         [
             a.tolist() == b.tolist()
             for a, b in zip(
-                consecutive_steps(
-                    np.array([2, 5, 5, 6, 15]), stepsize=4, direction="smaller"
-                ),
+                consecutive_steps(np.array([2, 5, 5, 6, 15]), stepsize=4, direction="smaller"),
                 [
                     np.array([2]),
                     np.array([5]),
@@ -82,7 +78,9 @@ def test_consecutive_steps():
             a.tolist() == b.tolist()
             for a, b in zip(
                 consecutive_steps(
-                    np.array([2, 5, 5, 6, 15]), stepsize=9, direction="exact",
+                    np.array([2, 5, 5, 6, 15]),
+                    stepsize=9,
+                    direction="exact",
                 ),
                 [np.array([2, 5, 5, 6]), np.array([15])],
             )

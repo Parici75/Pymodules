@@ -1,4 +1,5 @@
 """Pandas utilities."""
+from __future__ import annotations
 
 import glob
 import logging
@@ -23,9 +24,7 @@ def format_series_name(series_name: str | Tuple, sep: str = " ") -> str:
     return str(series_name)
 
 
-def extract_calendar_features(
-    df: pd.DataFrame, level: str | None = None
-) -> pd.DataFrame:
+def extract_calendar_features(df: pd.DataFrame, level: str | None = None) -> pd.DataFrame:
     """Generates calendar features from a DatetimeIndex.
 
     Args:
@@ -52,7 +51,8 @@ def extract_calendar_features(
 
         if sum(is_index_level_datetime) > 1:
             logger.warning(
-                f"More than one DatetimeIndex level is available, the first one: {df.index.names[is_index_level_datetime.index(True)]} will be used"
+                f"More than one DatetimeIndex level is available, the first one: "
+                f"{df.index.names[is_index_level_datetime.index(True)]} will be used"
             )
 
         # Isolate the level
@@ -111,40 +111,26 @@ def extract_calendar_features(
     return df
 
 
-def flatten_index(
-    df: pd.DataFrame, axis: str | int = 1, sep: str = " "
-) -> pd.DataFrame:
+def flatten_index(df: pd.DataFrame, axis: str | int = 1, sep: str = " ") -> pd.DataFrame:
     """Flatten a hierarchical index in a human-friendly way."""
     flatten_df = df.copy()
 
     if axis not in [0, 1, "both"]:
-        raise ValueError(
-            f"Invalid axis value: {axis} is not one of [0, 1, 'both']"
-        )
+        raise ValueError(f"Invalid axis value: {axis} is not one of [0, 1, 'both']")
 
     if (axis == 1) | (axis == "both"):
         index_names = [
-            name if name else "level" + str(i)
-            for i, name in enumerate(df.columns.names)
+            name if name else "level" + str(i) for i, name in enumerate(df.columns.names)
         ]
         flatten_df.columns = pd.Index(
-            [
-                sep.join(map(lambda x: str(x), col)).strip()
-                for col in flatten_df.columns
-            ],
+            [sep.join(map(lambda x: str(x), col)).strip() for col in flatten_df.columns],
             name="_".join(index_names),
         )
 
     if (axis == 0) | (axis == "both"):
-        index_names = [
-            name if name else "level" + str(i)
-            for i, name in enumerate(df.index.names)
-        ]
+        index_names = [name if name else "level" + str(i) for i, name in enumerate(df.index.names)]
         flatten_df.index = pd.Index(
-            [
-                sep.join(map(lambda x: str(x), col)).strip()
-                for col in flatten_df.index
-            ],
+            [sep.join(map(lambda x: str(x), col)).strip() for col in flatten_df.index],
             name="_".join(index_names),
         )
 
@@ -197,9 +183,7 @@ def coalesce(
     df = df.drop(columns=column_names)
     # Rename the coalesced column
     if name is not None:
-        if isinstance(df.columns, pd.MultiIndex) and not isinstance(
-            name, tuple
-        ):
+        if isinstance(df.columns, pd.MultiIndex) and not isinstance(name, tuple):
             raise ValueError(f"Invalid column name: '{name}' for a MultiIndex")
         answer = answer.rename(name)
 
@@ -236,10 +220,7 @@ def regexp_columns(
 
     # Return the columns that match the pattern
     selected_columns = df.columns[
-        [
-            match is not None
-            for match in map(lambda x: re.search(pattern, x), columns_list)
-        ]
+        [match is not None for match in map(lambda x: re.search(pattern, x), columns_list)]
     ]
 
     return list(selected_columns)

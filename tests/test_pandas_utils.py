@@ -19,9 +19,7 @@ logging.getLogger("pymodules.pandas_utils").setLevel(logging.DEBUG)
 
 EXAMPLE_DATAFRAME = pd.DataFrame(
     zip(np.arange(1, 100), np.arange(1, 100)),
-    columns=pd.MultiIndex.from_arrays(
-        (np.repeat("data", 2), ["column1", "column2"])
-    ),
+    columns=pd.MultiIndex.from_arrays((np.repeat("data", 2), ["column1", "column2"])),
 )
 
 DATETIME_INDEXED_DATAFRAME = pd.DataFrame(
@@ -47,9 +45,7 @@ def test_format_series_name():
 
 
 def test_extract_calendar_features(caplog):
-    assert list(
-        extract_calendar_features(DATETIME_INDEXED_DATAFRAME).index.names
-    ) == [
+    assert list(extract_calendar_features(DATETIME_INDEXED_DATAFRAME).index.names) == [
         "minute",
         "hour",
         "day",
@@ -79,8 +75,7 @@ def test_flatten_index():
     ]
 
     assert (
-        flatten_index(DOUBLE_INDEXED_DATAFRAME, axis="both").index.names[0]
-        == "datetime1_datetime2"
+        flatten_index(DOUBLE_INDEXED_DATAFRAME, axis="both").index.names[0] == "datetime1_datetime2"
     )
 
 
@@ -104,9 +99,7 @@ def test_coalesce():
     COALESCABLE_DATAFRAME = EXAMPLE_DATAFRAME.copy()
     COALESCABLE_DATAFRAME.iloc[np.random.randint(0, 99, 25), 0] = np.nan
     coalesced_df = coalesce(COALESCABLE_DATAFRAME)
-    assert len(coalesced_df.columns) == 1 and list(coalesced_df.columns) == [
-        ("data", "column1")
-    ]
+    assert len(coalesced_df.columns) == 1 and list(coalesced_df.columns) == [("data", "column1")]
 
     COALESCABLE_DATAFRAME["additional_column"] = 10
     coalesced_df = coalesce(
@@ -134,17 +127,11 @@ def test_regexp_columns():
         ("data", "column2"),
     ]
 
-    assert (
-        len(regexp_columns("Col", EXAMPLE_DATAFRAME, case_sensitive=True)) == 0
-    )
+    assert len(regexp_columns("Col", EXAMPLE_DATAFRAME, case_sensitive=True)) == 0
     assert len(regexp_columns("data", EXAMPLE_DATAFRAME, full_label=True)) == 0
 
-    regexped_columns = regexp_columns(
-        "data_column1", EXAMPLE_DATAFRAME, full_label=True
-    )
-    assert len(regexped_columns) == 1 and regexped_columns == [
-        ("data", "column1")
-    ]
+    regexped_columns = regexp_columns("data_column1", EXAMPLE_DATAFRAME, full_label=True)
+    assert len(regexped_columns) == 1 and regexped_columns == [("data", "column1")]
 
 
 def test_pandas_to_matlab(monkeypatch, caplog):

@@ -1,12 +1,11 @@
 """Miscellaneous utilities."""
+from __future__ import annotations
 
 from itertools import zip_longest
 from typing import Any, Dict, Generator, Iterable
 
 
-def grouper(
-    n: int, iterable: Iterable, fill_value: Any = None
-) -> "zip_longest":
+def grouper(n: int, iterable: Iterable, fill_value: Any = None) -> "zip_longest":
     """Collects data into fixed-length chunks or blocks.
 
     example:
@@ -17,7 +16,7 @@ def grouper(
 
 
 def pairwise(iterable: Iterable) -> Generator[Any, None, None]:
-    """ Generates pairs of adjacent elements in an iterable."""
+    """Generates pairs of adjacent elements in an iterable."""
     it = iter(iterable)
     a = next(it, None)
 

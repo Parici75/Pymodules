@@ -1,5 +1,5 @@
 [project]
-name = "Pymodules"
+name = "pymodules"
 dynamic = ['version']
 authors = [
   { name="Benjamin Roland", email="benjamin.roland@hotmail.fr" },
@@ -7,7 +7,7 @@ authors = [
 description = "A collection of helper functions for common pandas / numpy / string & files manipulations in Python"
 readme = "README.md"
 license = { text="BSD-3-Clause" }
-requires-python = ">=3.10"
+requires-python = ">=3.8"
 dependencies = ["pandas", "numpy", "scipy", "matplotlib"]
 classifiers = [
     "Programming Language :: Python :: 3",
@@ -16,7 +16,7 @@ classifiers = [
 ]
 
 [project.urls]
-"Homepage" = "https://github.com/Parici75/pymodules"
+"Homepage" = "https://github.com/parici75/pymodules"
 
 [build-system]
 # Minimum requirements for the build system to execute.

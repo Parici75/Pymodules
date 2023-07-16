@@ -1,4 +1,5 @@
 """Graphics and Matplotlib utilities."""
+from __future__ import annotations
 
 import logging
 import os
@@ -92,9 +93,7 @@ def to_grayscale_cmap(
     luminance = np.sqrt(np.dot(colors[:, :3] ** 2, rgb_weight))
     colors[:, :3] = luminance[:, np.newaxis]
 
-    return matplotlib.colors.LinearSegmentedColormap.from_list(
-        cmap.name + "_gray", colors, cmap.N
-    )
+    return matplotlib.colors.LinearSegmentedColormap.from_list(cmap.name + "_gray", colors, cmap.N)
 
 
 def plot_colormap(cmap: matplotlib.colors.Colormap | str) -> None:
@@ -104,9 +103,7 @@ def plot_colormap(cmap: matplotlib.colors.Colormap | str) -> None:
     colors = cmap(np.arange(cmap.N))
     grayscale_colors = to_grayscale_cmap(np.arange(to_grayscale_cmap(cmap).N))
 
-    fig, ax = plt.subplots(
-        2, figsize=(6, 2), subplot_kw=dict(xticks=[], yticks=[])
-    )
+    fig, ax = plt.subplots(2, figsize=(6, 2), subplot_kw=dict(xticks=[], yticks=[]))
     ax[0].imshow([colors], extent=[0, 10, 0, 1])
     ax[1].imshow([grayscale_colors], extent=[0, 10, 0, 1])
 

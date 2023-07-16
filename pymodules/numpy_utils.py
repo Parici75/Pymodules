@@ -1,4 +1,5 @@
 """Numpy utilities."""
+from __future__ import annotations
 
 from typing import Any, Sequence, List
 
@@ -11,12 +12,10 @@ def moving_average(x: np.ndarray, sliding_window: int = 3) -> np.ndarray:
     cumulative_sum[sliding_window:] = (
         cumulative_sum[sliding_window:] - cumulative_sum[:-sliding_window]
     )
-    return cumulative_sum[sliding_window - 1:] / sliding_window
+    return cumulative_sum[sliding_window - 1 :] / sliding_window
 
 
-def shift(
-    arr: np.ndarray, offset: int, fill_value: Any = np.nan
-) -> np.ndarray:
+def shift(arr: np.ndarray, offset: int, fill_value: Any = np.nan) -> np.ndarray:
     """Shifts a numpy array."""
     if type(fill_value) != arr.dtype:
         raise TypeError(f"Fill value: {fill_value} is not of type {arr.dtype}")
@@ -40,9 +39,7 @@ def base_round(x: float, base: float = 10.0) -> float:
     return base * np.round(x / base)
 
 
-def window_slide(
-    data: Sequence, stepsize: int = 1, width: int = 3
-) -> np.ndarray:
+def window_slide(data: Sequence, stepsize: int = 1, width: int = 3) -> np.ndarray:
     """Generates a list of subarrays obtained with a sliding window of stepsize and width.
 
     See https://stackoverflow.com/a/40085052/4696032

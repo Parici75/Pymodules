@@ -13,11 +13,9 @@ from pymodules.matplotlib_utils import (
 logging.getLogger("pymodules.matplotlib_utils").setLevel(logging.DEBUG)
 
 
-def test_get_diverging_cmap(caplog):
+def test_get_diverging_cmap():
     assert (
-        get_diverging_cmap(top_cmap="Oranges", bottom_cmap="Blues_r")(
-            np.arange(128)
-        ).tolist()
+        get_diverging_cmap(top_cmap="Oranges", bottom_cmap="Blues_r")(np.arange(128)).tolist()
         == get_cmap("Blues_r", lut=128)(np.arange(128)).tolist()
     )
 
@@ -43,12 +41,7 @@ def test_array_to_cmap():
 def test_grayscale_cmap():
     grayscale_cmap = to_grayscale_cmap("jet")
     # check if the returned object is of the correct type
-    assert isinstance(
-        grayscale_cmap, matplotlib.colors.LinearSegmentedColormap
-    )
+    assert isinstance(grayscale_cmap, matplotlib.colors.LinearSegmentedColormap)
     # check if the colors are grayscale
     colors = grayscale_cmap(np.arange(grayscale_cmap.N))
-    assert all(
-        (colors[:, 0] == colors[:, i]).all()
-        for i in np.arange(1, colors.shape[1] - 1)
-    )
+    assert all((colors[:, 0] == colors[:, i]).all() for i in np.arange(1, colors.shape[1] - 1))

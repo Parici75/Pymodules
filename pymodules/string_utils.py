@@ -1,4 +1,6 @@
 """String utilities."""
+from __future__ import annotations
+
 import re
 from typing import Any, Dict, Sequence
 
@@ -39,7 +41,5 @@ def replace_strings(string: str, replacements_pairs: Dict[str, str]) -> str:
     See https://stackoverflow.com/a/58814507
     """
     while len(replacements_pairs) > 0:
-        string = replace_strings(
-            string.replace(*replacements_pairs.popitem()), replacements_pairs
-        )
+        string = replace_strings(string.replace(*replacements_pairs.popitem()), replacements_pairs)
     return string
